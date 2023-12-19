@@ -65,6 +65,13 @@ const createMarkup = ({ preview, original, description }) => `
 const markup = images.map(createMarkup).join("");
 galleryList.insertAdjacentHTML("beforeend", markup);
 
-const click = galleryList.addEventListener("click", (e) => {
-	e.preventDefault();
+galleryList.addEventListener("click", (event) => {
+	event.preventDefault();
+	if (event.target === event.currentTarget) {
+		return;
+	}
+
+	const liEl = event.target.closest(".gallery-item");
+	console.log(event.target);
+	console.log(event.currentTarget);
 });
