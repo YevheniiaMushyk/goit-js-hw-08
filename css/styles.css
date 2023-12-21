@@ -1,9 +1,13 @@
+* {
+	box-sizing: border-box;
+}
+
 a {
 	color: currentColor;
 	text-decoration: none;
 }
 ul {
-	list-style-type: none;
+	list-style: none;
 	padding-left: 0;
 	margin: 0;
 }
@@ -31,4 +35,12 @@ img {
 
 .gallery-item {
 	flex: 1 1 calc((100% - 48px) / 3);
+}
+
+.gallery-link {
+	display: block;
+}
+
+.modal {
+	background: rgba(46, 47, 66, 0.8);
 }

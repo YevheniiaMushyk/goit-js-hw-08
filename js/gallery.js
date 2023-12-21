@@ -55,8 +55,6 @@ const createMarkup = ({ preview, original, description }) => `
       src="${preview}"
       data-source="${original}"
       alt="${description}"
-      width: 360px
-      height: 200px
     />
   </a>
 </li>
@@ -67,11 +65,27 @@ galleryList.insertAdjacentHTML("beforeend", markup);
 
 galleryList.addEventListener("click", (event) => {
 	event.preventDefault();
-	if (event.target === event.currentTarget) {
+	const img = event.target;
+	if (img === event.currentTarget) {
 		return;
 	}
 
-	const liEl = event.target.closest(".gallery-item");
-	console.log(event.target);
-	console.log(event.currentTarget);
+	const instance = basicLightbox.create(`
+	<div class="modal">
+    	<img
+			class="modal-image"
+			src="${img.dataset.source}"
+			alt="${img.alt}"
+    	/>
+	</div>
+`);
+	instance.show();
+
+	const modal = document.querySelector(".basicLightbox__placeholder");
+	modal.addEventListener("keydown", (evt) => {
+		if (evt.code === "Escape") {
+			console.log(evt.code);
+			instance.close();
+		}
+	});
 });
