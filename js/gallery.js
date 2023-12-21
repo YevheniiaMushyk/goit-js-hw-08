@@ -81,10 +81,8 @@ galleryList.addEventListener("click", (event) => {
 `);
 	instance.show();
 
-	const modal = document.querySelector(".basicLightbox__placeholder");
-	modal.addEventListener("keydown", (evt) => {
+	document.addEventListener("keydown", (evt) => {
 		if (evt.code === "Escape") {
-			console.log(evt.code);
 			instance.close();
 		}
 	});
