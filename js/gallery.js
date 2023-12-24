@@ -48,17 +48,17 @@ const images = [
 
 const galleryList = document.querySelector(".gallery");
 const createMarkup = ({ preview, original, description }) => `
-<li class="gallery-item">
-  <a class="gallery-link" href="${original}">
-    <img
-      class="gallery-image"
-      src="${preview}"
-      data-source="${original}"
-      alt="${description}"
-    />
-  </a>
-</li>
-`;
+	<li class="gallery-item">
+		<a class="gallery-link" href="${original}">
+    	<img
+		class="gallery-image"
+		src="${preview}"
+		data-source="${original}"
+		alt="${description}"
+    	/>
+  		</a>
+	</li>
+	`;
 
 const markup = images.map(createMarkup).join("");
 galleryList.insertAdjacentHTML("beforeend", markup);
@@ -69,21 +69,28 @@ galleryList.addEventListener("click", (event) => {
 	if (img === event.currentTarget) {
 		return;
 	}
-
-	const instance = basicLightbox.create(`
-	<div class="modal">
-    	<img
-			class="modal-image"
-			src="${img.dataset.source}"
-			alt="${img.alt}"
-    	/>
-	</div>
-`);
-	instance.show();
-
-	document.addEventListener("keydown", (evt) => {
+	const onModalClose = (evt) => {
 		if (evt.code === "Escape") {
 			instance.close();
 		}
-	});
+	};
+	const instance = basicLightbox.create(
+		`
+		<div class="modal">
+    		<img
+			class="modal-image"
+			src="${img.dataset.source}"
+			alt="${img.alt}"
+    		/>
+		</div>`,
+		{
+			onShow: () => {
+				document.addEventListener("keydown", onModalClose);
+			},
+			onClose: () => {
+				document.removeEventListener("keydown", onModalClose);
+			},
+		}
+	);
+	instance.show();
 });
